@@ -3,6 +3,7 @@
 public sealed class Board
 {
     public static Board Instance;
+    public static readonly object _lock = new object();
     public string BoardName { get; set; }
     private Board() { }
 
@@ -10,9 +11,15 @@ public sealed class Board
     {
         if (Instance == null)
         {
-            Instance = new Board();
-            Instance.BoardName = _boardName;
-            Console.WriteLine($"Connection to {_boardName} created");
+            lock (_lock)
+            {
+                if (Instance == null)
+                {
+                    Instance = new Board();
+                    Instance.BoardName = _boardName;
+                    Console.WriteLine($"Connection to {_boardName} created");
+                }
+            }
         }
         return Instance;
     }
