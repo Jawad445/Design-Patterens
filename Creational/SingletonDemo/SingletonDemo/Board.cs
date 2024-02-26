@@ -1,21 +1,28 @@
 ﻿namespace SingletonDemo;
 
-public class Board
+public sealed class Board
 {
+    public static Board Instance;
     public string BoardName { get; set; }
-    public Board(string _boardName)
-    {
-        BoardName = _boardName;
-        Console.WriteLine($"Connecting to {_boardName}");
-    }
+    private Board() { }
 
+    public static Board CreateBoard(string _boardName)
+    {
+        if (Instance == null)
+        {
+            Instance = new Board();
+            Instance.BoardName = _boardName;
+            Console.WriteLine($"Connection to {_boardName} created");
+        }
+        return Instance;
+    }
+    
     public void Execute(string _programName)
     {
-        Console.WriteLine($"Executing Program {_programName}");
+        Console.WriteLine($"Executing Program {_programName} on {Instance.BoardName}");
         for (int i = 0; i < 10; i++)
         {
             Console.WriteLine(i.ToString());
         }
     }
-
 }
