@@ -1,4 +1,5 @@
 ﻿using FactoryDemo.Models;
+using FactoryDemo.Processors;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FactoryDemo.Processors
+namespace FactoryDemo.Factories
 {
-    public class ProcessorFactory
+    public class CryptoCurrencyFactory : ProcessFactory
     {
-        public static IProcessor GetProcessor(string exchangeName, float volume)
+        public override double CalculateIntrest()
+        {
+            return 100;
+        }
+
+        public override IProcessor CreateProcess(string exchangeName, float volume)
         {
             IProcessor processor = null;
             if (exchangeName == "BTC")
