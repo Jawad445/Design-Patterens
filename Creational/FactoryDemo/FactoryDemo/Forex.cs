@@ -13,19 +13,8 @@ public class Forex
 
     public List<double> GetForcastData()
     {
-        IProcessor processor = null;
-        if (_exchange.Name == "BTC")
-        {
-            processor = new BitcoinProcessor(Risk.High, _exchange.Volume_1day_usd);
-        }
-        else if (_exchange.Name == "ETH")
-        {
-            processor = new BitcoinProcessor(Risk.High, _exchange.Volume_1day_usd);
-        }
-        else
-        {
-            processor = new BitcoinProcessor(Risk.Low, _exchange.Volume_1hrs_usd);
-        }
+        IProcessor processor = ProcessorFactory.GetProcessor(_exchange.Name, _exchange.Volume_1day_usd);
+        
         return processor.Predict();
     }
 }
