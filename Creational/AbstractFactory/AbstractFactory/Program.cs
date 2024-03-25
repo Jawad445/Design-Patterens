@@ -1,20 +1,11 @@
 ﻿using AbstractFactory.Frameworks.Enums;
-using AbstractFactory.Frameworks.FluentUI;
-using AbstractFactory.Frameworks.Material;
+using AbstractFactory.Frameworks.Factories;
 
-Render(FrameworkType.FluentUI);
+Render(new MaterialViewFactory());
 
-void Render(FrameworkType frameworkType)
+void Render(IViewFactory factory)
 {
-    switch (frameworkType)
-    {
-        case FrameworkType.Material:
-            new MaterialButton().Render();
-            new MaterialTextBox().Render();
-            break;
-        case FrameworkType.FluentUI:
-            new FluentUIButton().Render();
-            new FluentUITextBox().Render();
-            break;
-    }
+    factory.CreateTextBox().Render();
+    factory.CreateButton().Render();
+
 }
