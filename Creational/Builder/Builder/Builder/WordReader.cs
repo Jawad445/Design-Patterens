@@ -1,4 +1,5 @@
-﻿using Builder.MediaFiles;
+﻿using Builder.Converters;
+using Builder.MediaFiles;
 using Builder.Word;
 using Microsoft.VisualBasic.FileIO;
 
@@ -6,47 +7,22 @@ namespace Builder;
 
 public class WordReader
 {
-    public void Convert(WordDocument doc, FileType fileType)
+    public void Convert(WordDocument doc, IMediaConverter media)
     {
-        if(fileType == FileType.Text)
-        {
-            var textFile = new TextFile();
-            foreach (var item in doc.Body)
-            {
-                if (item is WordTitle)
-                {
-                    textFile.ConvertTitle(item as WordTitle);
-                }
-                else if (item is WordParagraph)
-                {
-                    textFile.ConvertParagraph(item as WordParagraph);
-                }
-                else if (item is WordPicture)
-                {
-                    textFile.ConvertImage(item as WordPicture);
-                }
-                textFile.OpenText();
-            }
 
-        }
-        else if(fileType == FileType.Audio)
+        foreach (var item in doc.Body)
         {
-            var audioFile = new AudioFile();
-            foreach (var item in doc.Body)
+            if (item is WordTitle)
             {
-                if (item is WordTitle)
-                {
-                    audioFile.ConvertTitle(item as WordTitle);
-                }
-                else if (item is WordParagraph)
-                {
-                    audioFile.ConvertParagraph(item as WordParagraph);
-                }
-                else if (item is WordPicture)
-                {
-                    audioFile.ConvertImage(item as WordPicture);
-                }
-                audioFile.openAudio();
+                media.ConvertTitle(item as WordTitle);
+            }
+            else if (item is WordParagraph)
+            {
+                media.ConvertParagraph(item as WordParagraph);
+            }
+            else if (item is WordPicture)
+            {
+                media.ConvertImage(item as WordPicture);
             }
         }
     }

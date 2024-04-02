@@ -11,21 +11,11 @@ namespace Builder.MediaFiles;
 
 public class TextFile
 {
-    private StringBuilder Text = new StringBuilder();
+    public StringBuilder Text = new StringBuilder();
 
-    public void ConvertImage(WordPicture pic)
+    public void AddText(string text)
     {
-        var text = Extractor.ExtractTextFromPicture(pic);
-        Text.AppendLine(text);
-    }
-    public void ConvertParagraph(WordParagraph paragraph)
-    {
-        var text = string.Join(Environment.NewLine, paragraph);
-        Text.AppendLine(text);
-    }
-    public void ConvertTitle(WordTitle title)
-    {
-        Text.AppendLine(title.Title);
+        Text.Append(text);
     }
 
     public void OpenText()
